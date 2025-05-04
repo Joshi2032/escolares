@@ -20,4 +20,8 @@ public class HerramientaService {
     public Herramienta createHerramienta(Herramienta herramienta) {
         return herramientaRepository.save(herramienta);
     }
+
+    public List<Herramienta> getHerramientasWithStockGreaterThan(Integer stock) {
+        return herramientaRepository.findByStockGreaterThan(stock);
+    }
 }

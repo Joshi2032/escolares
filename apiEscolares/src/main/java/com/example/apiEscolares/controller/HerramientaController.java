@@ -26,5 +26,10 @@ public class HerramientaController {
         return ResponseEntity.ok(herramientaService.createHerramienta(herramienta));
     }
 
+    @GetMapping("/stock")
+    public ResponseEntity<List<Herramienta>> getHerramientasWithStockGreaterThan(@RequestParam("stock") Integer stock) {
+        return ResponseEntity.ok(herramientaService.getHerramientasWithStockGreaterThan(stock));
+    }
+
     // Additional endpoints if needed
 }

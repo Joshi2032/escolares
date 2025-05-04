@@ -19,5 +19,10 @@ public class AuthController {
         return ResponseEntity.ok(authService.authenticate(loginRequest));
     }
 
+    @GetMapping("/validate")
+    public ResponseEntity<Boolean> validateToken(@RequestParam("token") String token) {
+        return ResponseEntity.ok(authService.validateToken(token));
+    }
+
     // Additional endpoints if needed
 }

@@ -36,4 +36,8 @@ public class AuthService {
         }
         throw new IllegalArgumentException("Invalid email or password");
     }
+
+    public boolean validateToken(String token) {
+        return autenticacionRepository.findByToken(token).isPresent();
+    }
 }

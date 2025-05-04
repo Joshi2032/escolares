@@ -5,6 +5,7 @@ import com.example.apiEscolares.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,5 +20,9 @@ public class LogService {
 
     public Log createLog(Log log) {
         return logRepository.save(log);
+    }
+
+    public List<Log> getLogsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return logRepository.findByFechaLogBetween(startDate, endDate);
     }
 }
