@@ -32,6 +32,12 @@ public class PrestamoController {
         return ResponseEntity.ok(prestamoService.updatePrestamoEstado(id, estado));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Prestamo> updatePrestamo(@PathVariable Integer id, @Valid @RequestBody Prestamo prestamo) {
+        prestamo.setId(id);
+        return ResponseEntity.ok(prestamoService.updatePrestamo(prestamo));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePrestamo(@PathVariable Integer id) {
         prestamoService.deletePrestamo(id);

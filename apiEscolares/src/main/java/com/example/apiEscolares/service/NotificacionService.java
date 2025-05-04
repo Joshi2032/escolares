@@ -24,4 +24,11 @@ public class NotificacionService {
     public List<Notificacion> getNotificacionesByUsuarioId(Integer usuarioId) {
         return notificacionRepository.findByUsuarioId(usuarioId);
     }
+
+    public Notificacion updateNotificacion(Notificacion notificacion) {
+        if (!notificacionRepository.existsById(notificacion.getId())) {
+            throw new RuntimeException("Notificacion not found");
+        }
+        return notificacionRepository.save(notificacion);
+    }
 }

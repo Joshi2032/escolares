@@ -58,6 +58,13 @@ public class PrestamoService {
         return prestamoRepository.save(prestamo);
     }
 
+    public Prestamo updatePrestamo(Prestamo prestamo) {
+        if (!prestamoRepository.existsById(prestamo.getId())) {
+            throw new RuntimeException("Prestamo not found");
+        }
+        return prestamoRepository.save(prestamo);
+    }
+
     public void deletePrestamo(Integer id) {
         if (!prestamoRepository.existsById(id)) {
             throw new RuntimeException("Prestamo not found");

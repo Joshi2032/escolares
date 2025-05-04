@@ -31,5 +31,11 @@ public class NotificacionController {
         return ResponseEntity.ok(notificacionService.getNotificacionesByUsuarioId(usuarioId));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Notificacion> updateNotificacion(@PathVariable Integer id, @Valid @RequestBody Notificacion notificacion) {
+        notificacion.setId(id);
+        return ResponseEntity.ok(notificacionService.updateNotificacion(notificacion));
+    }
+
     // Additional endpoints if needed
 }
