@@ -24,4 +24,18 @@ public class HerramientaService {
     public List<Herramienta> getHerramientasWithStockGreaterThan(Integer stock) {
         return herramientaRepository.findByStockGreaterThan(stock);
     }
+
+    public Herramienta updateHerramienta(Herramienta herramienta) {
+        if (!herramientaRepository.existsById(herramienta.getId())) {
+            throw new RuntimeException("Herramienta not found");
+        }
+        return herramientaRepository.save(herramienta);
+    }
+
+    public void deleteHerramienta(Integer id) {
+        if (!herramientaRepository.existsById(id)) {
+            throw new RuntimeException("Herramienta not found");
+        }
+        herramientaRepository.deleteById(id);
+    }
 }

@@ -31,5 +31,17 @@ public class HerramientaController {
         return ResponseEntity.ok(herramientaService.getHerramientasWithStockGreaterThan(stock));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Herramienta> updateHerramienta(@PathVariable Integer id, @Valid @RequestBody Herramienta herramienta) {
+        herramienta.setId(id);
+        return ResponseEntity.ok(herramientaService.updateHerramienta(herramienta));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteHerramienta(@PathVariable Integer id) {
+        herramientaService.deleteHerramienta(id);
+        return ResponseEntity.noContent().build();
+    }
+
     // Additional endpoints if needed
 }

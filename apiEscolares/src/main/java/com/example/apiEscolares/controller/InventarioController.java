@@ -25,4 +25,21 @@ public class InventarioController {
     public ResponseEntity<Inventario> createInventario(@Valid @RequestBody Inventario inventario) {
         return ResponseEntity.ok(inventarioService.createInventario(inventario));
     }
+
+    @GetMapping("/herramienta/{herramientaId}")
+    public ResponseEntity<List<Inventario>> getInventariosByHerramientaId(@PathVariable Integer herramientaId) {
+        return ResponseEntity.ok(inventarioService.getInventariosByHerramientaId(herramientaId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Inventario> updateInventario(@PathVariable Integer id, @Valid @RequestBody Inventario inventario) {
+        inventario.setId(id);
+        return ResponseEntity.ok(inventarioService.updateInventario(inventario));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteInventario(@PathVariable Integer id) {
+        inventarioService.deleteInventario(id);
+        return ResponseEntity.noContent().build();
+    }
 }

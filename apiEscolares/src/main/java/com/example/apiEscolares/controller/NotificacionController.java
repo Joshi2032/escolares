@@ -26,5 +26,10 @@ public class NotificacionController {
         return ResponseEntity.ok(notificacionService.createNotificacion(notificacion));
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Notificacion>> getNotificacionesByUsuarioId(@PathVariable Integer usuarioId) {
+        return ResponseEntity.ok(notificacionService.getNotificacionesByUsuarioId(usuarioId));
+    }
+
     // Additional endpoints if needed
 }

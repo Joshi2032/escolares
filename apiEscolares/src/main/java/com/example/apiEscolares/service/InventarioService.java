@@ -20,4 +20,22 @@ public class InventarioService {
     public Inventario createInventario(Inventario inventario) {
         return inventarioRepository.save(inventario);
     }
+
+    public List<Inventario> getInventariosByHerramientaId(Integer herramientaId) {
+        return inventarioRepository.findByHerramientaId(herramientaId);
+    }
+
+    public Inventario updateInventario(Inventario inventario) {
+        if (!inventarioRepository.existsById(inventario.getId())) {
+            throw new RuntimeException("Inventario not found");
+        }
+        return inventarioRepository.save(inventario);
+    }
+
+    public void deleteInventario(Integer id) {
+        if (!inventarioRepository.existsById(id)) {
+            throw new RuntimeException("Inventario not found");
+        }
+        inventarioRepository.deleteById(id);
+    }
 }

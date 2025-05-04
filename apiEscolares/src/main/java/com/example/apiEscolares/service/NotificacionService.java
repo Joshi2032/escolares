@@ -20,4 +20,8 @@ public class NotificacionService {
     public Notificacion createNotificacion(Notificacion notificacion) {
         return notificacionRepository.save(notificacion);
     }
+
+    public List<Notificacion> getNotificacionesByUsuarioId(Integer usuarioId) {
+        return notificacionRepository.findByUsuarioId(usuarioId);
+    }
 }

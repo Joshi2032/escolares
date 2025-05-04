@@ -39,4 +39,30 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
+
+    public List<Usuario> getUsuariosByRolNombre(String rolNombre) {
+        return usuarioRepository.findByRolNombre(rolNombre);
+    }
+
+    public Usuario updateUsuario(Integer id, UsuarioRequest usuarioRequest) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario not found"));
+
+        Rol rol = rolRepository.findById(usuarioRequest.getRolId())
+                .orElseThrow(() -> new RuntimeException("Rol not found"));
+
+        usuario.setNombre(usuarioRequest.getNombre());
+        usuario.setEmail(usuarioRequest.getEmail());
+        usuario.setPassword(usuarioRequest.getPassword());
+        usuario.setRol(rol);
+
+        return usuarioRepository.save(usuario);
+    }
+
+    public void deleteUsuario(Integer id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new RuntimeException("Usuario not found");
+        }
+        usuarioRepository.deleteById(id);
+    }
 }
