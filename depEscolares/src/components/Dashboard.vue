@@ -1,6 +1,7 @@
 <script setup>
 import DashboardAlumno from '../views/alumnos/dashboardAlumno.vue';
 import DashboardAdmin from '../views/admins/dashboardAdmin.vue';
+import dashboardV from '../views/dashboardV.vue'
 
 // Recibe el rol del usuario como prop
 defineProps({

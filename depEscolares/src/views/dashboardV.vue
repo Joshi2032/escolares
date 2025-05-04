@@ -8,20 +8,8 @@
     </div>
     <ul class="nav-links">
       <li>
-        <a href="../alumnos/historialAlumno.vue">
-          <img src="@/assets/transacciones.png" alt="transacciones" class="icon" />
-          <span>Historial</span>
-        </a>
-      </li>
-      <li>
-        <a href="../alumnos/prestamosAlumno.vue">
-          <img src="@/assets/prestamos.png" alt="prestamos" class="icon" />
-          <span>Préstamos</span>
-        </a>
-      </li>
-      <li>
-        <a href="/alumno/usuario">
-          <img src="@/assets/usuario.png" alt="usuario" class="icon" />
+        <a href="/alumno/ajustes">
+          <img src="@/assets/sesion.png" alt="usuario" class="icon" />
           <span>Usuario</span>
         </a>
       </li>

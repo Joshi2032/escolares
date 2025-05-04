@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import login from '../components/login.vue' // Importa el componente de login
+import Dashboard from '@/components/Dashboard.vue'
+import Herramientas from '@/components/Herramientas.vue'
 
 
 const router = createRouter({
@@ -10,6 +12,18 @@ const router = createRouter({
       name: 'login',
       component: login // Asocia el componente de login
     },
+    {
+
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/herramientas',
+      name: 'herramientas',
+      component: Herramientas
+    },
+    
   ],
 })
 
