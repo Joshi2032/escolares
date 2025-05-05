@@ -1,6 +1,7 @@
 package com.example.apiEscolares.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +21,9 @@ public class LoginController {
     public ResponseEntity<?> login(@RequestBody Usuario loginUsuario) {
         Usuario usuarioExistente = usuarioRepository.findByEmailAndPassword(loginUsuario.getEmail(), loginUsuario.getPassword()).orElse(null);
         if (usuarioExistente != null) {
-            return ResponseEntity.ok(usuarioExistente);
+            return ResponseEntity.ok().body("Inicio de sesión exitoso");
         } else {
-            return ResponseEntity.status(401).body("Credenciales inválidas");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Correo o contraseña incorrectos");
         }
     }
 }
