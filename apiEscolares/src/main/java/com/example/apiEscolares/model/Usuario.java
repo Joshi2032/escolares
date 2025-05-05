@@ -1,33 +1,47 @@
 package com.example.apiEscolares.model;
 
-import jakarta.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements Serializable {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable = false, length = 100)
+    
+     @Column(nullable = false) // Define que no puede ser NULL
     private String nombre;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = true) // Define que no puede ser NULL y debe ser único
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false) // Define que no puede ser NULL
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "rol_id", nullable = false)
-    private Rol rol;
+    @JoinColumn(name = "rol_id", referencedColumnName = "id", nullable = false)
+    private Roles roles;
 
-    @Column(name = "fecha_registro", nullable = false, updatable = false, insertable = false)
-    private LocalDateTime fechaRegistro;
 
-    // Getters and setters
+    public Usuario() {
+        // Constructor vacío requerido por JPA
+    }
+
+    public Usuario(Integer id, String nombre, String email, String password, Roles roles) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -60,19 +74,11 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Roles getroles() {
+        return roles;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
-    public LocalDateTime getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
+    public void setroles(Roles roles) {
+        this.roles = roles;
     }
 }

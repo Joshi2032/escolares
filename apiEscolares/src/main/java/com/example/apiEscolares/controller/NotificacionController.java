@@ -1,41 +1,41 @@
 package com.example.apiEscolares.controller;
 
-import com.example.apiEscolares.model.Notificacion;
-import com.example.apiEscolares.service.NotificacionService;
-import jakarta.validation.Valid;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.apiEscolares.model.Notificaciones;
+import com.example.apiEscolares.repository.NotificacionesRepository;
 
 @RestController
 @RequestMapping("/api/notificaciones")
 public class NotificacionController {
-
     @Autowired
-    private NotificacionService notificacionService;
+    private NotificacionesRepository notificacionesRepository;
 
+    // 🔓 Admin: Ver todas las notificaciones
     @GetMapping
-    public ResponseEntity<List<Notificacion>> getAllNotificaciones() {
-        return ResponseEntity.ok(notificacionService.getAllNotificaciones());
+    public List<Notificaciones> getAllNotificaciones() {
+        return notificacionesRepository.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<Notificacion> createNotificacion(@Valid @RequestBody Notificacion notificacion) {
-        return ResponseEntity.ok(notificacionService.createNotificacion(notificacion));
-    }
-
+    // 🔒 Usuario: Ver solo sus notificaciones (por ID de usuario)
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<List<Notificacion>> getNotificacionesByUsuarioId(@PathVariable Integer usuarioId) {
-        return ResponseEntity.ok(notificacionService.getNotificacionesByUsuarioId(usuarioId));
+    public List<Notificaciones> getNotificacionesByUsuario(@PathVariable Integer usuarioId) {
+        return notificacionesRepository.findByUsuarioId(usuarioId);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Notificacion> updateNotificacion(@PathVariable Integer id, @Valid @RequestBody Notificacion notificacion) {
-        notificacion.setId(id);
-        return ResponseEntity.ok(notificacionService.updateNotificacion(notificacion));
+    // 🔓 Admin: Crear nueva notificación (ej. cuando se envía una notificación)
+    @PostMapping
+    public ResponseEntity<Notificaciones> crearNotificacion(@RequestBody Notificaciones notificacion) {
+        Notificaciones nuevaNotificacion = notificacionesRepository.save(notificacion);
+        return ResponseEntity.ok(nuevaNotificacion);
     }
-
-    // Additional endpoints if needed
 }

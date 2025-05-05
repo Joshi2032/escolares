@@ -1,10 +1,9 @@
 package com.example.apiEscolares.repository;
 
-import com.example.apiEscolares.model.Inventario;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+
+import com.example.apiEscolares.model.Inventario;
 
 public interface InventarioRepository extends JpaRepository<Inventario, Integer> {
-    // Additional query methods if needed
-    List<Inventario> findByHerramientaId(Integer herramientaId);
+    // Puedes agregar más métodos si es necesario, por ejemplo, para obtener inventario de una herramienta específica
 }

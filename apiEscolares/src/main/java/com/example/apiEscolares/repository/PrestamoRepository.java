@@ -1,11 +1,10 @@
 package com.example.apiEscolares.repository;
 
-import com.example.apiEscolares.model.Prestamo;
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PrestamoRepository extends JpaRepository<Prestamo, Integer> {
-    // Additional query methods if needed
-    List<Prestamo> findByUsuarioId(Integer usuarioId);
-    List<Prestamo> findByEstado(Prestamo.EstadoPrestamo estado);
+import com.example.apiEscolares.model.Prestamos;
+
+public interface PrestamoRepository extends JpaRepository<Prestamos, Integer> {
+    List<Prestamos> findByUsuarioId(Integer usuarioId); // Para que un alumno vea solo sus préstamos
 }

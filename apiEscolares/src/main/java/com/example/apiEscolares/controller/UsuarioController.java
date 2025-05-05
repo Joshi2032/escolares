@@ -1,47 +1,59 @@
 package com.example.apiEscolares.controller;
 
-import com.example.apiEscolares.dto.UsuarioRequest;
-import com.example.apiEscolares.model.Usuario;
-import com.example.apiEscolares.service.UsuarioService;
-import jakarta.validation.Valid;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.apiEscolares.model.Usuario;
+import com.example.apiEscolares.model.Roles;
+import com.example.apiEscolares.repository.UsuarioRepository;
+import com.example.apiEscolares.repository.RolesRepository;
 
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RolesRepository rolesRepository;
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> getAllUsuarios() {
-        return ResponseEntity.ok(usuarioService.getAllUsuarios());
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) {
-        return ResponseEntity.ok(usuarioService.createUsuario(usuarioRequest));
+    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
+        Usuario nuevoUsuario = usuarioRepository.save(usuario);
+        return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
     }
 
-    @GetMapping("/rol/{rolNombre}")
-    public ResponseEntity<List<Usuario>> getUsuariosByRolNombre(@PathVariable String rolNombre) {
-        return ResponseEntity.ok(usuarioService.getUsuariosByRolNombre(rolNombre));
-    }
+    // Nuevo endpoint para actualizar el rol de un usuario
+    @PutMapping("/{id}/rol")
+    public ResponseEntity<?> actualizarRolUsuario(@PathVariable Integer id, @RequestBody Map<String, String> request) {
+        String nuevoRolNombre = request.get("rol"); // ej: "admin"
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Integer id, @Valid @RequestBody UsuarioRequest usuarioRequest) {
-        return ResponseEntity.ok(usuarioService.updateUsuario(id, usuarioRequest));
-    }
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUsuario(@PathVariable Integer id) {
-        usuarioService.deleteUsuario(id);
-        return ResponseEntity.noContent().build();
-    }
+        Optional<Roles> rolOpt = rolesRepository.findByNombre(nuevoRolNombre);
+        if (rolOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Rol no válido: " + nuevoRolNombre);
+        }
 
-    // Additional endpoints if needed
+        Usuario usuario = usuarioOpt.get();
+        usuario.setroles(rolOpt.get());
+        usuarioRepository.save(usuario);
+
+        return ResponseEntity.ok("Rol actualizado a: " + nuevoRolNombre);
+    }
 }
